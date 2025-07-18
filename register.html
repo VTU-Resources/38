@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,75 +16,74 @@
     body {
       background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #ffffff;
-      padding: 40px 20px;
-      transition: filter 0.3s ease;
+      padding: 30px 15px;
     }
 
     .form-card {
       background: #111827;
-      border-radius: 24px;
-      padding: 40px;
-      max-width: 600px;
+      border-radius: 20px;
+      padding: 25px 20px;
+      max-width: 500px;
       margin: auto;
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     h2 {
       text-align: center;
-      font-size: 2rem;
+      font-size: 1.4rem;
       background: linear-gradient(to right, #00eaff, #7efff5);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     label {
-      font-size: 1rem;
+      font-size: 0.9rem;
       color: #e0e0e0;
     }
 
     form {
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      gap: 12px;
     }
 
     input, select {
-      padding: 12px;
-      border-radius: 10px;
+      padding: 10px;
+      border-radius: 8px;
       border: none;
       background: #1f2937;
       color: white;
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
 
     .amount-section, .qr-section {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 15px;
     }
 
     .amount-section {
-      font-size: 1.2rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #00ffc6;
     }
 
     .qr-section img {
-      width: 180px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(0, 255, 200, 0.6);
+      width: 150px;
+      border-radius: 16px;
+      box-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
     }
 
     .submit-btn {
       background: linear-gradient(to right, #00eaff, #7efff5);
       color: #000;
       font-weight: 700;
-      padding: 14px 30px;
+      padding: 12px;
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       cursor: pointer;
-      font-size: 1rem;
-      margin-top: 20px;
+      font-size: 0.95rem;
+      margin-top: 15px;
     }
 
     .loader {
@@ -93,8 +92,8 @@
       border: 4px solid #f3f3f3;
       border-top: 4px solid #00eaff;
       border-radius: 50%;
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
       animation: spin 1s linear infinite;
     }
 
@@ -120,17 +119,17 @@
     .popup-box {
       background: #22c55e;
       color: white;
-      padding: 20px 24px;
-      border-radius: 14px;
+      padding: 16px 20px;
+      border-radius: 12px;
       text-align: center;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      max-width: 300px;
+      max-width: 280px;
       animation: fadeIn 0.3s ease-in-out;
     }
 
     .popup-box p {
-      font-size: 1rem;
-      margin-bottom: 15px;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
     }
 
     .popup-box button {
@@ -138,10 +137,10 @@
       color: #16a34a;
       font-weight: bold;
       border: none;
-      padding: 8px 20px;
+      padding: 8px 16px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       transition: all 0.3s ease;
     }
 
@@ -152,6 +151,12 @@
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
+    }
+
+    @media screen and (max-width: 480px) {
+      .form-card {
+        padding: 20px 15px;
+      }
     }
   </style>
 </head>
@@ -172,6 +177,8 @@
       <label>Number of Subjects:</label>
       <select required onchange="updateAmount(this.value)">
         <option value="">Select</option>
+        <option value="1">1 Subject</option>
+        <option value="2">2 Subjects</option>
         <option value="3">3 Subjects</option>
         <option value="5">5 Subjects</option>
         <option value="6">6 Subjects</option>
@@ -208,16 +215,26 @@
       const payNote = document.getElementById("payNote");
       let amount = "";
 
-      if (value === "3") {
-        amount = "₹7,999";
-      } else if (value === "5") {
-        amount = "₹9,315";
-      } else if (value === "6") {
-        amount = "₹9,999";
-      } else {
-        amountText.innerHTML = "";
-        payNote.innerHTML = "";
-        return;
+      switch (value) {
+        case "1":
+          amount = "₹2,500";
+          break;
+        case "2":
+          amount = "₹3,333";
+          break;
+        case "3":
+          amount = "₹7,999";
+          break;
+        case "5":
+          amount = "₹9,315";
+          break;
+        case "6":
+          amount = "₹9,999";
+          break;
+        default:
+          amountText.innerHTML = "";
+          payNote.innerHTML = "";
+          return;
       }
 
       amountText.innerHTML = `💰 Total Amount: ${amount}`;
@@ -228,10 +245,9 @@
       const popup = document.getElementById("popupOverlay");
       popup.style.display = "none";
       document.body.style.filter = "blur(0)";
-      
       setTimeout(() => {
         window.location.href = 'index.html';
-      }, 3000); // 3 sec delay
+      }, 3000);
     }
 
     document.getElementById("registerForm").addEventListener("submit", function (e) {
